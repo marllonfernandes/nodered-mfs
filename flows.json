@@ -16,25 +16,6 @@
         "env": []
     },
     {
-        "id": "948125a81607b89d",
-        "type": "group",
-        "z": "1b62166c36ce78ee",
-        "name": "api/hello",
-        "style": {
-            "label": true
-        },
-        "nodes": [
-            "a30465ae471b4ada",
-            "c3101d0ff2ef0cdd",
-            "65571f743653a5ce",
-            "e88f21445b91fc4b"
-        ],
-        "x": 74,
-        "y": 59,
-        "w": 652,
-        "h": 82
-    },
-    {
         "id": "b43cd5e2a20ea514",
         "type": "group",
         "z": "1b62166c36ce78ee",
@@ -48,14 +29,33 @@
             "0bfeadab04154871"
         ],
         "x": 74,
-        "y": 179,
-        "w": 582,
+        "y": 419,
+        "w": 712,
         "h": 82
+    },
+    {
+        "id": "0718ebdc7dcb2ebf",
+        "type": "group",
+        "z": "1b62166c36ce78ee",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [],
+        "x": null,
+        "y": null,
+        "w": 40,
+        "h": 40
     },
     {
         "id": "98ad62b6bc059c0a",
         "type": "mongodb3",
-        "uri": "mongodb://localhost:27017/psatosql",
+        "uri": "mongodb://mongodb:27017/psatosql",
         "name": "psatosql-local",
         "options": "",
         "parallelism": "-1"
@@ -66,11 +66,11 @@
         "z": "1b62166c36ce78ee",
         "g": "948125a81607b89d",
         "name": "",
-        "url": "/api/hello",
+        "url": "/api/entitynames",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 170,
+        "x": 200,
         "y": 100,
         "wires": [
             [
@@ -86,8 +86,8 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 650,
-        "y": 100,
+        "x": 510,
+        "y": 360,
         "wires": []
     },
     {
@@ -113,7 +113,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 180,
-        "y": 220,
+        "y": 460,
         "wires": [
             [
                 "aa497e5ea961de60"
@@ -129,7 +129,7 @@
         "method": "GET",
         "ret": "txt",
         "paytoqs": "ignore",
-        "url": "http://127.0.0.1:1880/api/hello",
+        "url": "http://127.0.0.1:1880/api/entitynames",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -142,10 +142,16 @@
                 "keyValue": "Content-Type",
                 "valueType": "other",
                 "valueValue": "application/json"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "Authorization",
+                "valueType": "other",
+                "valueValue": "Bearer token teste"
             }
         ],
         "x": 390,
-        "y": 220,
+        "y": 460,
         "wires": [
             [
                 "0bfeadab04154871"
@@ -161,13 +167,13 @@
         "active": true,
         "tosidebar": true,
         "console": false,
-        "tostatus": true,
+        "tostatus": false,
         "complete": "payload",
         "targetType": "msg",
-        "statusVal": "payload",
+        "statusVal": "",
         "statusType": "auto",
-        "x": 550,
-        "y": 220,
+        "x": 680,
+        "y": 460,
         "wires": []
     },
     {
@@ -176,33 +182,34 @@
         "z": "1b62166c36ce78ee",
         "g": "948125a81607b89d",
         "name": "authorization",
-        "func": "let payload = \"\";\n\nif (!msg.req.headers.authorization) {\n    payload = \"Cabeçalho de autorização ausente\";\n    msg.statusCode = 401;\n}else {\n    payload = \"hello world\";\n}\n\nmsg.payload = { message: payload };\n\nreturn msg;",
+        "func": "let statusCode = 200;\n\nif (!msg.req.headers.authorization) {\n    msg.payload = { message: \"Cabeçalho de autorização ausente\" };\n    statusCode = 401;\n}\n\nmsg.statusCode = statusCode;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 350,
-        "y": 100,
+        "x": 290,
+        "y": 160,
         "wires": [
             [
-                "e88f21445b91fc4b"
+                "588cf82879f5ba21"
             ]
         ],
         "info": "# "
     },
     {
-        "id": "e88f21445b91fc4b",
-        "type": "json",
+        "id": "d6c7c5eef9eade82",
+        "type": "mongodb3 in",
         "z": "1b62166c36ce78ee",
         "g": "948125a81607b89d",
-        "name": "",
-        "property": "payload",
-        "action": "str",
-        "pretty": false,
-        "x": 510,
-        "y": 100,
+        "service": "_ext_",
+        "configNode": "98ad62b6bc059c0a",
+        "name": "mongodb",
+        "collection": "entitynames",
+        "operation": "find.toArray",
+        "x": 460,
+        "y": 260,
         "wires": [
             [
                 "c3101d0ff2ef0cdd"
@@ -210,66 +217,54 @@
         ]
     },
     {
-        "id": "d6c7c5eef9eade82",
-        "type": "mongodb3 in",
+        "id": "588cf82879f5ba21",
+        "type": "switch",
         "z": "1b62166c36ce78ee",
-        "service": "_ext_",
-        "configNode": "98ad62b6bc059c0a",
-        "name": "mongodb",
-        "collection": "entitynames",
-        "operation": "find.toArray",
-        "x": 400,
-        "y": 360,
-        "wires": [
-            [
-                "f13c10a1cc2fec54"
-            ]
-        ]
-    },
-    {
-        "id": "5bc7f58f01b2406d",
-        "type": "inject",
-        "z": "1b62166c36ce78ee",
-        "name": "",
-        "props": [
+        "g": "948125a81607b89d",
+        "name": "Condition 200 or 401",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
             {
-                "p": "payload"
+                "t": "eq",
+                "v": "200",
+                "vt": "str"
             },
             {
-                "p": "topic",
+                "t": "eq",
+                "v": "401",
                 "vt": "str"
             }
         ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 160,
-        "y": 360,
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 340,
+        "y": 220,
         "wires": [
             [
                 "d6c7c5eef9eade82"
+            ],
+            [
+                "b910498170fcf4fa"
             ]
         ]
     },
     {
-        "id": "f13c10a1cc2fec54",
-        "type": "debug",
+        "id": "b910498170fcf4fa",
+        "type": "json",
         "z": "1b62166c36ce78ee",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 620,
-        "y": 360,
-        "wires": []
+        "g": "948125a81607b89d",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 450,
+        "y": 300,
+        "wires": [
+            [
+                "c3101d0ff2ef0cdd"
+            ]
+        ]
     }
 ]
