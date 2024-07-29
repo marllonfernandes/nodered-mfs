@@ -53,6 +53,14 @@
         "h": 82
     },
     {
+        "id": "98ad62b6bc059c0a",
+        "type": "mongodb3",
+        "uri": "mongodb://localhost:27017/psatosql",
+        "name": "psatosql-local",
+        "options": "",
+        "parallelism": "-1"
+    },
+    {
         "id": "a30465ae471b4ada",
         "type": "http in",
         "z": "1b62166c36ce78ee",
@@ -200,5 +208,68 @@
                 "c3101d0ff2ef0cdd"
             ]
         ]
+    },
+    {
+        "id": "d6c7c5eef9eade82",
+        "type": "mongodb3 in",
+        "z": "1b62166c36ce78ee",
+        "service": "_ext_",
+        "configNode": "98ad62b6bc059c0a",
+        "name": "mongodb",
+        "collection": "entitynames",
+        "operation": "find.toArray",
+        "x": 400,
+        "y": 360,
+        "wires": [
+            [
+                "f13c10a1cc2fec54"
+            ]
+        ]
+    },
+    {
+        "id": "5bc7f58f01b2406d",
+        "type": "inject",
+        "z": "1b62166c36ce78ee",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 360,
+        "wires": [
+            [
+                "d6c7c5eef9eade82"
+            ]
+        ]
+    },
+    {
+        "id": "f13c10a1cc2fec54",
+        "type": "debug",
+        "z": "1b62166c36ce78ee",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 360,
+        "wires": []
     }
 ]
