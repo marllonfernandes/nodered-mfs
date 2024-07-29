@@ -29,9 +29,27 @@
             "65571f743653a5ce",
             "e88f21445b91fc4b"
         ],
-        "x": 94,
-        "y": 79,
+        "x": 74,
+        "y": 59,
         "w": 652,
+        "h": 82
+    },
+    {
+        "id": "b43cd5e2a20ea514",
+        "type": "group",
+        "z": "1b62166c36ce78ee",
+        "name": "debugger",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "4fc9832332ce51e5",
+            "aa497e5ea961de60",
+            "0bfeadab04154871"
+        ],
+        "x": 74,
+        "y": 179,
+        "w": 582,
         "h": 82
     },
     {
@@ -44,8 +62,8 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 190,
-        "y": 120,
+        "x": 170,
+        "y": 100,
         "wires": [
             [
                 "65571f743653a5ce"
@@ -60,14 +78,15 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 670,
-        "y": 120,
+        "x": 650,
+        "y": 100,
         "wires": []
     },
     {
         "id": "4fc9832332ce51e5",
         "type": "inject",
         "z": "1b62166c36ce78ee",
+        "g": "b43cd5e2a20ea514",
         "name": "",
         "props": [
             {
@@ -85,8 +104,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 140,
-        "y": 300,
+        "x": 180,
+        "y": 220,
         "wires": [
             [
                 "aa497e5ea961de60"
@@ -97,6 +116,7 @@
         "id": "aa497e5ea961de60",
         "type": "http request",
         "z": "1b62166c36ce78ee",
+        "g": "b43cd5e2a20ea514",
         "name": "",
         "method": "GET",
         "ret": "txt",
@@ -116,8 +136,8 @@
                 "valueValue": "application/json"
             }
         ],
-        "x": 350,
-        "y": 300,
+        "x": 390,
+        "y": 220,
         "wires": [
             [
                 "0bfeadab04154871"
@@ -128,6 +148,7 @@
         "id": "0bfeadab04154871",
         "type": "debug",
         "z": "1b62166c36ce78ee",
+        "g": "b43cd5e2a20ea514",
         "name": "debug 1",
         "active": true,
         "tosidebar": true,
@@ -137,8 +158,8 @@
         "targetType": "msg",
         "statusVal": "payload",
         "statusType": "auto",
-        "x": 510,
-        "y": 300,
+        "x": 550,
+        "y": 220,
         "wires": []
     },
     {
@@ -154,8 +175,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 370,
-        "y": 120,
+        "x": 350,
+        "y": 100,
         "wires": [
             [
                 "e88f21445b91fc4b"
@@ -172,8 +193,8 @@
         "property": "payload",
         "action": "str",
         "pretty": false,
-        "x": 530,
-        "y": 120,
+        "x": 510,
+        "y": 100,
         "wires": [
             [
                 "c3101d0ff2ef0cdd"
