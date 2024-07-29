@@ -28,29 +28,31 @@
             "aa497e5ea961de60",
             "0bfeadab04154871"
         ],
-        "x": 74,
-        "y": 419,
+        "x": 154,
+        "y": 359,
         "w": 712,
         "h": 82
     },
     {
-        "id": "0718ebdc7dcb2ebf",
+        "id": "7891e395be509117",
         "type": "group",
         "z": "1b62166c36ce78ee",
+        "name": "GET entityNames",
         "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
+            "label": true
         },
-        "nodes": [],
-        "x": null,
-        "y": null,
-        "w": 40,
-        "h": 40
+        "nodes": [
+            "a30465ae471b4ada",
+            "c3101d0ff2ef0cdd",
+            "65571f743653a5ce",
+            "d6c7c5eef9eade82",
+            "588cf82879f5ba21",
+            "b910498170fcf4fa"
+        ],
+        "x": 154,
+        "y": 59,
+        "w": 832,
+        "h": 242
     },
     {
         "id": "98ad62b6bc059c0a",
@@ -64,13 +66,13 @@
         "id": "a30465ae471b4ada",
         "type": "http in",
         "z": "1b62166c36ce78ee",
-        "g": "948125a81607b89d",
+        "g": "7891e395be509117",
         "name": "",
         "url": "/api/entitynames",
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 200,
+        "x": 280,
         "y": 100,
         "wires": [
             [
@@ -82,12 +84,12 @@
         "id": "c3101d0ff2ef0cdd",
         "type": "http response",
         "z": "1b62166c36ce78ee",
-        "g": "948125a81607b89d",
+        "g": "7891e395be509117",
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 510,
-        "y": 360,
+        "x": 910,
+        "y": 260,
         "wires": []
     },
     {
@@ -112,8 +114,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 180,
-        "y": 460,
+        "x": 260,
+        "y": 400,
         "wires": [
             [
                 "aa497e5ea961de60"
@@ -150,8 +152,8 @@
                 "valueValue": "Bearer token teste"
             }
         ],
-        "x": 390,
-        "y": 460,
+        "x": 470,
+        "y": 400,
         "wires": [
             [
                 "0bfeadab04154871"
@@ -172,15 +174,15 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 680,
-        "y": 460,
+        "x": 760,
+        "y": 400,
         "wires": []
     },
     {
         "id": "65571f743653a5ce",
         "type": "function",
         "z": "1b62166c36ce78ee",
-        "g": "948125a81607b89d",
+        "g": "7891e395be509117",
         "name": "authorization",
         "func": "let statusCode = 200;\n\nif (!msg.req.headers.authorization) {\n    msg.payload = { message: \"Cabeçalho de autorização ausente\" };\n    statusCode = 401;\n}\n\nmsg.statusCode = statusCode;\n\nreturn msg;",
         "outputs": 1,
@@ -189,7 +191,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 290,
+        "x": 370,
         "y": 160,
         "wires": [
             [
@@ -202,14 +204,14 @@
         "id": "d6c7c5eef9eade82",
         "type": "mongodb3 in",
         "z": "1b62166c36ce78ee",
-        "g": "948125a81607b89d",
+        "g": "7891e395be509117",
         "service": "_ext_",
         "configNode": "98ad62b6bc059c0a",
         "name": "mongodb",
         "collection": "entitynames",
         "operation": "find.toArray",
-        "x": 460,
-        "y": 260,
+        "x": 660,
+        "y": 180,
         "wires": [
             [
                 "c3101d0ff2ef0cdd"
@@ -220,7 +222,7 @@
         "id": "588cf82879f5ba21",
         "type": "switch",
         "z": "1b62166c36ce78ee",
-        "g": "948125a81607b89d",
+        "g": "7891e395be509117",
         "name": "Condition 200 or 401",
         "property": "statusCode",
         "propertyType": "msg",
@@ -239,7 +241,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 340,
+        "x": 420,
         "y": 220,
         "wires": [
             [
@@ -254,13 +256,13 @@
         "id": "b910498170fcf4fa",
         "type": "json",
         "z": "1b62166c36ce78ee",
-        "g": "948125a81607b89d",
+        "g": "7891e395be509117",
         "name": "",
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 450,
-        "y": 300,
+        "x": 650,
+        "y": 260,
         "wires": [
             [
                 "c3101d0ff2ef0cdd"
