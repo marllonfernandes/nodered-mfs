@@ -8,7 +8,64 @@
         "env": []
     },
     {
-        "id": "cb4166a771d9e063",
+        "id": "65654460e9990219",
+        "type": "tab",
+        "label": "Fluxo 5",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "948125a81607b89d",
+        "type": "group",
+        "z": "1b62166c36ce78ee",
+        "name": "api/hello",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "a30465ae471b4ada",
+            "c3101d0ff2ef0cdd",
+            "65571f743653a5ce",
+            "e88f21445b91fc4b"
+        ],
+        "x": 94,
+        "y": 79,
+        "w": 652,
+        "h": 82
+    },
+    {
+        "id": "a30465ae471b4ada",
+        "type": "http in",
+        "z": "1b62166c36ce78ee",
+        "g": "948125a81607b89d",
+        "name": "",
+        "url": "/api/hello",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "65571f743653a5ce"
+            ]
+        ]
+    },
+    {
+        "id": "c3101d0ff2ef0cdd",
+        "type": "http response",
+        "z": "1b62166c36ce78ee",
+        "g": "948125a81607b89d",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 670,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "4fc9832332ce51e5",
         "type": "inject",
         "z": "1b62166c36ce78ee",
         "name": "",
@@ -28,10 +85,99 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 260,
+        "x": 140,
+        "y": 300,
+        "wires": [
+            [
+                "aa497e5ea961de60"
+            ]
+        ]
+    },
+    {
+        "id": "aa497e5ea961de60",
+        "type": "http request",
+        "z": "1b62166c36ce78ee",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://127.0.0.1:1880/api/hello",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Content-Type",
+                "valueType": "other",
+                "valueValue": "application/json"
+            }
+        ],
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "0bfeadab04154871"
+            ]
+        ]
+    },
+    {
+        "id": "0bfeadab04154871",
+        "type": "debug",
+        "z": "1b62166c36ce78ee",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 510,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "65571f743653a5ce",
+        "type": "function",
+        "z": "1b62166c36ce78ee",
+        "g": "948125a81607b89d",
+        "name": "authorization",
+        "func": "let payload = \"\";\n\nif (!msg.req.headers.authorization) {\n    payload = \"Cabeçalho de autorização ausente\";\n    msg.statusCode = 401;\n}else {\n    payload = \"hello world\";\n}\n\nmsg.payload = { message: payload };\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
         "y": 120,
         "wires": [
-            []
+            [
+                "e88f21445b91fc4b"
+            ]
+        ],
+        "info": "# "
+    },
+    {
+        "id": "e88f21445b91fc4b",
+        "type": "json",
+        "z": "1b62166c36ce78ee",
+        "g": "948125a81607b89d",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 530,
+        "y": 120,
+        "wires": [
+            [
+                "c3101d0ff2ef0cdd"
+            ]
         ]
     }
 ]
